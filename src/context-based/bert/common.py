@@ -1,5 +1,5 @@
 from bert_headlines_data import *
-
+from utils import load_json_dataset
 
 # maybe to be converted to a proper unit test
 def test_headlines_sarcasm_dataset():
@@ -54,7 +54,6 @@ def print_headlines_sarcasm_data_module():
 
     data_module.setup()
     train_loader = data_module.train_dataloader()
-
     for batch in train_loader:
         print("Sample Input IDs:", batch["input_ids"].shape)
         print(batch["labels"])

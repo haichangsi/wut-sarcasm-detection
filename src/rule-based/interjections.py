@@ -2,6 +2,7 @@ import nltk
 from nltk.tokenize import word_tokenize
 import json
 
+
 nltk.download("averaged_perceptron_tagger")
 
 
@@ -24,9 +25,10 @@ def analyze_interjections(text: str, loaded_interjections: list) -> set:
 
 def test():
     english_interjections = load_known_interjections(
-        "src/rule-based/interjections.json", "english"
+        "interjections.json", "english"
     )
-    test_en_text = "Wow! That is simply unbelievable! Awesome job! Hey, are you okay? Oops. Whoa. Yikes. I did it again! Oh. Hey. Wow. Ouch. Hurray. Oh no. Oh well. Oh my. Ah."
+    test_en_text = "Wow! That is simply unbelievable! Awesome job! Hey, are you okay? Oops. Whoa. Yikes. I did it" \
+                   " again! Oh. Hey. Wow. Ouch. Hurray. Oh no. Oh well. Oh my. Ah."
     interjections = analyze_interjections(test_en_text, english_interjections)
     print(interjections)
 
@@ -47,3 +49,6 @@ def classify_by_interjections(text: str, loaded_interjections: list) -> bool:
         return True
 
     return False
+
+
+test()
