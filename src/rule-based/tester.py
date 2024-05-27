@@ -1,5 +1,6 @@
 from loader import *
 from hashtag import *
+from interjections import *
 
 
 class Tester:
@@ -17,6 +18,9 @@ class Tester:
                 index=False, name=None
             )
         )
+        self.headlines_labeled = list(
+            self.df[["headline", "is_sarcastic"]].itertuples(index=False, name=None)
+        )
 
     def test_hashtag_on_headlines(self):
         correct = 0
@@ -33,7 +37,23 @@ class Tester:
         print(f"Correct: {correct} out of {len(self.hashtag_headlines_labeled)}")
         print(f"Whole dataset: {len(self.df)}")
 
+    def test_interjections_on_headlines(self):
+        correct = 0
+        known_interjections = load_known_interjections(
+            "src/rule-based/interjections.json", "english"
+        )
+        for headline, label in self.headlines_labeled:
+            result = classify_by_interjections(headline, known_interjections)
+            # result is True if the headline is sarcastic, False if it is not
+            # in the dataset labels, 0 - sarcastic, 1 - not sarcastic
+            if result is False and label == 1:
+                correct += 1
+            elif result is True and label == 0:
+                correct += 1
+        print(f"Correct: {correct} out of {len(self.headlines_labeled)}")
+
 
 tester = Tester()
 tester.load_headlines()
-tester.test_hashtag_on_headlines()
+# tester.test_hashtag_on_headlines()
+tester.test_interjections_on_headlines()

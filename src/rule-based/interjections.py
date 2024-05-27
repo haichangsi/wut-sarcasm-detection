@@ -14,6 +14,7 @@ def load_known_interjections(file_path, language):
 def analyze_interjections(text: str, loaded_interjections: list) -> set:
     tokens = word_tokenize(text)
     tagged_tokens = nltk.pos_tag(tokens)
+    print(tagged_tokens)
     interjections = [
         word
         for word, pos in tagged_tokens
@@ -43,6 +44,7 @@ def classify_by_interjections(text: str, loaded_interjections: list) -> bool:
 
     tagged_tokens = nltk.pos_tag(tokens)
     first_tag = tagged_tokens[0][1]
+    # UH is the tag for interjections in the Penn Treebank POS tagset
     if first_tag == "UH":
         return True
 
